@@ -80,7 +80,7 @@ APK – Android Package Kit
 
 # External Dependecies:
  **OKHttp3**
- ![okhttp3Strings](images/okhttp3_strings.PNG)
+ ![Strings](images/okhttp3_strings.PNG)
  ![okhttp3](images/okhttp3.PNG)
 
 
