@@ -79,14 +79,13 @@ APK – Android Package Kit
 
 
 # External Dependecies:
- **OKHttp3**
+ **OKHttp3:**
 
- 
  ![Strings](images/okhttp3_strings.PNG)
  ![okhttp3](images/okhttp3.PNG)
 
 
- **Entropy**
+ **Entropy:**
  ![entropy](images/entropy.PNG)
 
  # AndroidManifest.xml
