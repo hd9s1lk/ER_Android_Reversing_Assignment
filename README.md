@@ -175,8 +175,7 @@ In order to perform the dynamic analysis, the main apk file was first sent to th
 - `getDeviceId()` 
   - For every single data that is being archived, there's a few functions working with them. For this one there is `f11123b()` which is the interface where we can call this function. Then, `m5663d()` go and gets the value for future usage. Not only that but, function `m5664e()` also gets the value from the Map structure in a string format, which is then called in `m5695i()` to be written in a JSONObject.
 
-  ```java
-
+```java
   /* JADX INFO: renamed from: d */
 public final String m5663d() {
     try {
@@ -194,9 +193,7 @@ public final String m5664e() {
         return "4444";
     }
 }
-```
 
-```java
 /* JADX INFO: renamed from: i */
 private static JSONObject m5695i() {
     return C2909d.m5778b(C2837e.m5168a().m5664e());
