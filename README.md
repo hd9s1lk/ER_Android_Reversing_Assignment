@@ -1,18 +1,27 @@
 # ER_Android_Reversing_Assignment
+
 1st_Assignment of ER
 
 # Executive Summary
+
 # User Perspective
+
 # Organization Perspective
 
 # Background
-## Date 
+
+## Date
+
 2026/02/27
+
 ## File Name (VirusTotal)
+
 com.phone.junk.clean.smart.apk
 
 # Static Analysis
+
 ## File Hashes (VirusTotal)
+
 **MD4** - 6848658879f8c35d6c3252bef794daec
 
 **MD5** - eb3b881048f49355a2d3a9493ab50eba
@@ -30,12 +39,15 @@ com.phone.junk.clean.smart.apk
 **TLSH** - T1F02733A7F328A42FD87330B18EBB421385995D4682436F63E915B21D1DB79C48F5AFC8
 
 ## File Size
+
 21398921 bytes (20.41 MB)
 
 ## File Type
+
 APK – Android Package Kit
 
 # Signature
+
 **Type:** X.509
 
 **Version:** 3
@@ -77,60 +89,85 @@ APK – Android Package Kit
 
 **Language (DetectitEasy)** – Kotlin
 
-
 # External Dependecies:
+
  **OKHttp3:**
 
  ![Strings](images/okhttp3_strings.PNG)
  ![okhttp3](images/okhttp3.PNG)
 
-
  **Entropy:**
  ![entropy](images/entropy.PNG)
 
- # AndroidManifest.xml
+# AndroidManifest.xml
 
  One of the files that DetectitEasy was able to obtain was the AndroidManifest.xml. This is a file that is critical for the application, defining information like permissions, activities, intents and services. In our application, the following permissions were found:
 
  ![permissions](images/permissions.PNG)
 
  **Acceptable Permissions**
- - android.permission.INTERNET
- - android.permission.ACCESS_NETWORK_STATE
- - android.permission.WAKE_LOCK
- - android.permission.RECEIVE_BOOT_COMPLETED
- - android.permission.REQUEST_DELETE_PACKAGES
+
+- android.permission.INTERNET
+- android.permission.ACCESS_NETWORK_STATE
+- android.permission.WAKE_LOCK
+- android.permission.RECEIVE_BOOT_COMPLETED
+- android.permission.REQUEST_DELETE_PACKAGES
 
  **Outside Communications**
- - android.permission.ACCESS_ADSERVICES_AD_ID
- - com.google.android.gms.permission.AD_ID
- - android.permission.ACCESS_ADSERVICES_TOPICS
- - android.permission.ACCESS_ADSERVICES_ATTRIBUTION
- - com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
- - com.google.android.providers.gsf.permission.READ_GSERVICES
+
+- android.permission.ACCESS_ADSERVICES_AD_ID
+- com.google.android.gms.permission.AD_ID
+- android.permission.ACCESS_ADSERVICES_TOPICS
+- android.permission.ACCESS_ADSERVICES_ATTRIBUTION
+- com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
+- com.google.android.providers.gsf.permission.READ_GSERVICES
 
  **Controlling the Device**
- - android.permission.MANAGE_EXTERNAL_STORAGE
- - android.permission.PACKAGE_USAGE_STATS
- - android.permission.BIND_JOB_SERVICE
- - android.permission.BIND_NOTIFICATION_LISTENER_SERVICE
- - android.permission.DUMP
- - android.permission.POST_NOTIFICATIONS
- - android.permission.READ_EXTERNAL_STORAGE
- - android.permission.WRITE_EXTERNAL_STORAGE
-**OSINT**
- - android.permission.ACCESS_NETWORK_STATE
+
+- android.permission.MANAGE_EXTERNAL_STORAGE
+- android.permission.PACKAGE_USAGE_STATS
+- android.permission.BIND_JOB_SERVICE
+- android.permission.BIND_NOTIFICATION_LISTENER_SERVICE
+- android.permission.DUMP
+- android.permission.POST_NOTIFICATIONS
+- android.permission.READ_EXTERNAL_STORAGE
+- android.permission.WRITE_EXTERNAL_STORAGE
+  **OSINT**
+- android.permission.ACCESS_NETWORK_STATE
 
 The permissions shown here are mostly used on malware. There are a lot of permissions about managing the storage (ex: `MANAGE_EXTERNAL_STORAGE` allows the app to full access to external storage and files on behalf of the user.). Not only that but we also have `POST_NOTIFICATIONS` as this allows the app to post notifications. It’s even considered as dangerous by developer.android.com, `BIND_JOB_SERVICE` which is an Android permission for apps to perform any Background Tasks, `DUMP` allows the app to retrieve the state information from the whole system and `WRITE_EXTERNAL_STORAGE` allows the app to write to external storage. It’s also considered dangerous.
 There’s also an extra information being read (OSINT-related), as the `ACCESS_NETWORK_STATE` is also present on the AndroidManifest file, and this gives access about all the networks of our device.
 
 
+# Behavioral Analysis
 
+**Setup**
+In order to perform the dynamic analysis, the main apk file was first sent to the JADX for further investigation.
 
+**Live Memory Dump**
 
+- `ICommonParams`
+  - First we noticed the creation of an interface (`ICommonParams`) that saves multiple information about the user into a Map structure, such as `DeviceID` or `UserID`. For each piece of data we did the full code flow.
+  package com.apm.insight;
+```
+  import java.util.List;
+  import java.util.Map;
 
+  /* JADX INFO: compiled from: r8-map-id-ce88e2bd4288c86909bdaac64d4c96611d145c55c02c55c7cc9024d475899202 */
+  /* JADX INFO: loaded from: classes.dex */
+  public interface ICommonParams {
+    Map<String, Object> getCommonParams();
 
+    String getDeviceId();
 
+    List<String> getPatchInfo();
 
+    Map<String, Integer> getPluginInfo();
+
+    String getSessionId();
+
+    long getUserId();
+  } 
+  ```
 
 
