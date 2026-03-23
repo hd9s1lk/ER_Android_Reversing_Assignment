@@ -431,6 +431,48 @@ public final class AFj1vSDK {
 }
 ```
 
+Now, one of the most alarming segments of this apk is an specific `DeviceData`. As we can see, it takes data from our device such as the model, totalRam, diskSpace, modelClass, etc... All of this data is written to `Build.PRODUCT`.
+
+```java
+public final String toString() {
+    // 1. Initialize StringBuilder with the architecture tag
+    StringBuilder sb = new StringBuilder("DeviceData{arch=");
+    sb.append(this.f26024a);
+    sb.append(", model=");
+    sb.append(Build.MODEL);
+    sb.append(", availableProcessors=");
+    sb.append(this.f26025b);
+    sb.append(", totalRam=");
+    sb.append(this.f26026c);
+    sb.append(", diskSpace=");
+    sb.append(this.f26027d);
+    sb.append(", isEmulator=");
+    sb.append(this.f26028e);
+    sb.append(", state=");
+    sb.append(this.f26029f);
+    sb.append(", manufacturer=");
+    sb.append(Build.MANUFACTURER);
+    sb.append(", modelClass=");
+    return X0.b.o(sb, Build.PRODUCT, "}");
+}
+```
+
+The most alarming is `isEmulator=`. Why does an app needs to know if we are running it in an emulator environment?
+
+**Strings.xml**
+
+Inside strings.xml file, there's every single string the user will be able to see while using the app. As this app goes by a cleaner app, but also an agressive spyware/adware, there's a lot of ad's mention such as:
+
+![ads_1](images/ads.PNG)
+![ads_2](images/ads_2.PNG)
+
+Not only that, but also it confirms the permission to uninstall apps:
+
+![unni](images/unninstall.PNG)
+
+And also the mention of "Fraud" or related words:
+
+![fraud](images/strings.xml_fraud.PNG)
 
 
 # References 
