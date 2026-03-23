@@ -229,7 +229,7 @@ private C2842a m5230a(String str, JSONArray jSONArray) {
 }
 ```
 - `getPluginInfo()`
- - For PluginInfo, we have the same interface as PatchInfo (`f11180c`), and the function (`m5245()`) will deal with writing the value to the Map Structure and then to the JSONObject.
+  - For PluginInfo, we have the same interface as PatchInfo (`f11180c`), and the function (`m5245()`) will deal with writing the value to the Map Structure and then to the JSONObject.
 
  ```java
  /* JADX INFO: renamed from: b */
