@@ -229,7 +229,7 @@ private C2842a m5230a(String str, JSONArray jSONArray) {
 }
 ```
 - `getPluginInfo()`
-  - For PluginInfo, we have the same interface as PatchInfo (`f11180c`), and the function (`m5245()`) will deal with writing the value to the Map Structure and then to the JSONObject.
+  - For PluginInfo, we have the same interface as PatchInfo (`f11180c`), and the function (`m5245()`) will deal with writing the value, which is a Map Structure, and then write it to the JSONObject.
 
  ```java
  /* JADX INFO: renamed from: b */
@@ -271,13 +271,56 @@ public final C2842a m5245a(Map<String, Integer> map) {
 }
 ```
 
+- `getSessionId()`
+  - This simple function get the value of the SessionId, and stores it into a parcel. A parcel is where this value will get parsed for future use.
+
+```java
+  public int getSessionId() {
+    return this.zaa;
+}
+
+@Override // android.os.Parcelable
+public void writeToParcel(Parcel parcel, int i3) {
+    int iBeginObjectHeader = SafeParcelWriter.beginObjectHeader(parcel);
+    SafeParcelWriter.writeInt(parcel, 1, getSessionId());
+    SafeParcelWriter.writeBoolean(parcel, 2, this.zab);
+    SafeParcelWriter.finishObjectHeader(parcel, iBeginObjectHeader);
+}
+```
 
 
+- `getUserId()`
+  - Finally, about UserId. The interface it uses is `f11123b`, and the `m5665f()` function gets the value from this same interface. Then the `m5227e()` function writes the value to the JSONObject. We also have the variable that saves the UserId value -> `jM5665f`.
 
 
+```java
+/* JADX INFO: renamed from: f */
+public final long m5665f() {
+    try {
+        // Retrieves User ID from the ICommonParams instance
+        return this.f11123b.getUserId();
+    } catch (Throwable unused) {
+        // Returns 0L (Long) as a safe fallback if retrieval fails
+        return 0L;
+    }
+}
 
-
-
+/* JADX INFO: renamed from: e */
+public final JSONObject m5227e() {
+    try {
+        // Calls the fetcher method
+        long jM5665f = C2837e.m5168a().m5665f();
+        
+        // Only adds to JSON if the ID is valid (greater than 0)
+        if (jM5665f > 0) {
+            this.f10894c.put("user_id", jM5665f);
+        }
+    } catch (JSONException e10) {
+        e10.printStackTrace();
+    }
+    return this.f10894c;
+}
+```
 
 
 
