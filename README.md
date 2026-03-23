@@ -170,6 +170,6 @@ In order to perform the dynamic analysis, the main apk file was first sent to th
 
     long getUserId();
   } 
-  ```java
+  ```
 
 
