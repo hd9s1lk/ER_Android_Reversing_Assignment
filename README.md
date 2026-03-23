@@ -201,8 +201,8 @@ private static JSONObject m5695i() {
 ```
 
 
-- `getPatchInfo`
-  - For PatchInfo, we also have an interface (`f11180c()`) which gets the value and then verified and written into a List by `m5244a()`. At last this value will get written into our final JSONObject (`m5230a()`).
+- `getPatchInfo()`
+  - For PatchInfo, we also have an interface (`f11180c`) which gets the value and then verified and written into a List by `m5244a()`. At last this value will get written into our final JSONObject (`m5230a()`).
 
  ```java
  try {
@@ -228,6 +228,66 @@ private C2842a m5230a(String str, JSONArray jSONArray) {
     return this;
 }
 ```
+- `getPluginInfo()`
+ - For PluginInfo, we have the same interface as PatchInfo (`f11180c`), and the function (`m5245()`) will deal with writing the value to the Map Structure and then to the JSONObject.
+
+ ```java
+ /* JADX INFO: renamed from: b */
+private C2842a m5749b(C2842a c2842a) {
+    c2842a.m5239a(C2837e.m5196q(), C2837e.m5197r());
+    if (C2837e.m5193n()) {
+        c2842a.m5247a("is_mp", (Object) 1);
+    }
+    try {
+        c2842a.m5245a(this.f11180c.getPluginInfo());
+    } catch (Throwable th) {
+        try {
+            HashMap map = new HashMap();
+            map.put("Data fetch failed since source misstake:\n" + C2884m.m5563a(th), 0);
+            c2842a.m5245a(map);
+        } catch (Throwable unused) {
+        }
+    }
+    c2842a.m5250b(C2837e.m5195p());
+    c2842a.m5247a("process_name", C2872a.m5445d(C2837e.m5186g()));
+    return c2842a;
+}
+
+/* JADX INFO: renamed from: a */
+public final C2842a m5245a(Map<String, Integer> map) {
+    JSONArray jSONArray = new JSONArray();
+    if (map == null) {
+        this.f10895a.put("plugin_info", jSONArray);
+        return this;
+    }
+    for (String str : map.keySet()) {
+        JSONObject jSONObject = new JSONObject();
+        jSONObject.put(CampaignEx.JSON_KEY_PACKAGE_NAME, str);
+        jSONObject.put("version_code", map.get(str));
+        jSONArray.put(jSONObject);
+    }
+    this.f10895a.put("plugin_info", jSONArray);
+    return this;
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+# References 
+
+- [https://www.w3schools.com/java/java_map.asp](https://www.w3schools.com/java/java_map.asp)
+- [https://developer.android.com/reference/packages](https://developer.android.com/reference/packages)
+- [https://www.virustotal.com/gui/file/4e819b297c4f1a77a29ebf744df05ad9977e704c54fec73a65c219aa78dfb889/detection](https://www.virustotal.com/gui/file/4e819b297c4f1a77a29ebf744df05ad9977e704c54fec73a65c219aa78dfb889/detection)
 
 
 
