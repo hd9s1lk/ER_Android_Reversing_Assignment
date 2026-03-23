@@ -202,7 +202,7 @@ private static JSONObject m5695i() {
 
 
 - `getPatchInfo`
- - For PatchInfo, we also have an interface (`f11180c()`) which gets the value and then verified and written into a List by `m5244a()`. At last this value will get written into our final JSONObject (`m5230a()`).
+  - For PatchInfo, we also have an interface (`f11180c()`) which gets the value and then verified and written into a List by `m5244a()`. At last this value will get written into our final JSONObject (`m5230a()`).
 
  ```java
  try {
