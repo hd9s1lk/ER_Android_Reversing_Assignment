@@ -322,7 +322,114 @@ public final JSONObject m5227e() {
 }
 ```
 
+- `C2869i()`
+  - The reason why this function is interesting is because it establishes internet connection. As a normal cleaner app, you don't need internet connection and that's why this is suspicious.
 
+```java
+/**
+ * Establishes a connection to the server and prepares the output stream.
+ * * @param str  The destination URL
+ * @param str2 The boundary string for multipart data
+ * @param z10  Boolean flag to enable Gzip compression
+ */
+public C2869i(String str, String str2, boolean z10) throws ProtocolException {
+    this.f11054c = str2;
+    this.f11055d = z10;
+    
+    // Create a unique boundary for the multipart form data
+    String boundary = "AAA" + System.currentTimeMillis() + "AAA";
+    this.f11052a = boundary;
+
+    try {
+        // Initialize the connection
+        HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(str).openConnection();
+        this.f11053b = httpURLConnection;
+        
+        // Configure basic connection settings
+        httpURLConnection.setUseCaches(false);
+        httpURLConnection.setDoOutput(true); // Allows sending data
+        httpURLConnection.setDoInput(true);  // Allows receiving response
+        httpURLConnection.setRequestMethod("POST");
+
+        // Inject custom headers from the MonitorCrash/APM component
+        CustomRequestHeader customRequestHeader = MonitorCrash.mCustomRequestHeader;
+        if (customRequestHeader != null) {
+            customRequestHeader.addRequestHeader(this.f11053b);
+        }
+
+        // Set the Content-Type header for multipart data
+        this.f11053b.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        // Handle Gzip compression if enabled
+        if (!z10) {
+            // Standard stream if Gzip is disabled
+            this.f11056e = new C2866f(this.f11053b.getOutputStream());
+        } else {
+            // Compressed stream to hide data size/usage
+            this.f11053b.setRequestProperty("Content-Encoding", "gzip");
+            this.f11057f = new C2871k(this.f11053b.getOutputStream());
+        }
+        
+    } catch (Exception e) {
+        throw new ProtocolException("Connection initialization failed");
+    }
+}
+
+```
+
+Not only that but there's also a link generator functions (`generateLink()`) that uses a harcoded link inside (`AFj1vSDK`) to decide to which server it sends the info to.
+As you can see in `AFj1vSDK` the link has formatted strings with %s, meaning that the app can fill the link with whatever data it wants, such as userId or even SessionId.
+
+
+`generateLink`
+```java
+public String generateLink() {
+    StringBuilder sb = new StringBuilder();
+    String str = this.values;
+    
+    // 1. Logic to determine the Base URL (using the AppsFlyer template)
+    sb.append((str == null || !str.startsWith("http")) ? 
+        String.format(AFj1vSDK.valueOf, AppsFlyerLib.getInstance().getHostPrefix(), AFb1tSDK.valueOf().getHostName()) 
+        : this.values);
+    
+    // 2. Append the specific endpoint or event name
+    if (this.AFInAppEventParameterName != null) {
+        sb.append('/');
+        sb.append(this.AFInAppEventParameterName);
+    }
+    
+    // 3. Map out the keystore/parameters (Device ID, User ID, etc.)
+    Map<String, String> mapAFKeystoreWrapper = AFKeystoreWrapper();
+    StringBuilder sb2 = new StringBuilder();
+    
+    // 4. Loop through the map to create the query string (?key=value&key2=value2)
+    for (Map.Entry<String, String> entry : mapAFKeystoreWrapper.entrySet()) {
+        // Adds '?' for the first parameter and '&' (Typography.amp) for others
+        sb2.append(sb2.length() == 0 ? '?' : Typography.amp);
+        sb2.append(entry.getKey());
+        sb2.append('=');
+        sb2.append(entry.getValue());
+    }
+    
+    // 5. Combine the base URL with the parameters
+    sb.append(sb2.toString());
+    
+    return sb.toString();
+}
+```
+
+`AFj1vSDK`
+```java
+package com.appsflyer.internal;
+
+import androidx.annotation.VisibleForTesting;
+
+/* JADX INFO: loaded from: classes3.dex */
+public final class AFj1vSDK {
+    
+    @VisibleForTesting(otherwise = 3)
+    public static String valueOf = "https://%sapp.%s";
+}
+```
 
 
 
