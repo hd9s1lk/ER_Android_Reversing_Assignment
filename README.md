@@ -142,6 +142,7 @@ There’s also an extra information being read (OSINT-related), as the `ACCESS_N
 # Behavioral Analysis
 
 **Setup**
+
 In order to perform the dynamic analysis, the main apk file was first sent to the JADX for further investigation.
 
 **Live Memory Dump**
@@ -149,7 +150,7 @@ In order to perform the dynamic analysis, the main apk file was first sent to th
 - `ICommonParams`
   - First we noticed the creation of an interface (`ICommonParams`) that saves multiple information about the user into a Map structure, such as `DeviceID` or `UserID`. For each piece of data we did the full code flow.
   
-```
+```java
   package com.apm.insight;
   import java.util.List;
   import java.util.Map;
@@ -169,6 +170,6 @@ In order to perform the dynamic analysis, the main apk file was first sent to th
 
     long getUserId();
   } 
-  ```
+  ```java
 
 
