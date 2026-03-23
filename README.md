@@ -201,4 +201,35 @@ private static JSONObject m5695i() {
 ```
 
 
+- `getPatchInfo`
+ - For PatchInfo, we also have an interface (`f11180c()`) which gets the value and then verified and written into a List by `m5244a()`. At last this value will get written into our final JSONObject (`m5230a()`).
+
+ ```java
+ try {
+    c2842a.m5244a(this.f11180c.getPatchInfo());
+} catch (Throwable th) {
+    try {
+        c2842a.m5244a(Arrays.asList("Data fetch failed since source misstake:\n" + C2884m.m5563a(th)));
+    } catch (Throwable unused) {
+    }
+}
+
+/* JADX INFO: renamed from: a */
+private C2842a m5230a(String str, JSONArray jSONArray) {
+    JSONObject jSONObjectOptJSONObject = this.f10895a.optJSONObject("custom_long");
+    if (jSONObjectOptJSONObject == null) {
+        jSONObjectOptJSONObject = new JSONObject();
+        m5247a("custom_long", jSONObjectOptJSONObject);
+    }
+    try {
+        jSONObjectOptJSONObject.put(str, jSONArray);
+    } catch (JSONException unused) {
+    }
+    return this;
+}
+```
+
+
+
+
 
