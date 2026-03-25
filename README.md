@@ -1,12 +1,18 @@
 # ER_Android_Reversing_Assignment
 
-1st_Assignment of ER
+This assignment is focused on the analysis of one Android Application, which is flagged as being malicious. We want to know exactly how it works and what is its purpose.
+
+Work Done by: Pedro Costa, Jorge Saenz and Henrique Dias
 
 # Executive Summary
 
 # User Perspective
+This app goes by a simple tool to "clean" your phone and improve its performance, only to unknowingly install a sophisticated surveillance and advertising engine. On the surface, the app promises to delete junk files and monitor your battery health, but in the background it builds a comprehensive digital fingerprint of your life. From the moment it is installed, the app works to bypass security oversight by hiding its communications behind encoded strings and checking if it is being watched by security researchers. It monitors your most private habits, including exactly when you plug your phone into a charger and the specific identity of everyone who calls you. By intercepting your "Phone State," the app can hijack your screen during incoming calls to display intrusive, forced advertisements or log your contacts without any legitimate functional reason. It doesn't just clean your files; it can unninstall other apps, it harvests your hardware IDs, security patch levels, and device model, sending this "profile" to a remote server that can then trigger even more aggressive behaviors once it confirms you are a real, vulnerable user.
 
 # Organization Perspective
+
+For an organization, this "Cleaner" app represents a significant Insider Threat and Data Exfiltration risk. The app’s ability to monitor call states and potentially overlay system dialogues poses a direct threat to corporate confidentiality, as it could be used to log business contacts or intercept sensitive verbal communications. Furthermore, the inclusion of credential-related listeners and the use of background task managers (WorkManager) allow the app to persist on the network, silently consuming bandwidth and battery while potentially acting as a "dropper" for more severe payloads like ransomware or banking trojans. 
+All of these putting in risk the confidentialy and integrity not only of the company, but also every single worker inside.
 
 # Background
 
